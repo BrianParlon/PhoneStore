@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "419665886807",
+    "project_id": "phonefinder-d2206",
+    "storage_bucket": "phonefinder-d2206.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419665886807:android:033991969a4506868bad12",
+        "android_client_info": {
+          "package_name": "com.example.phonefinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419665886807-v8u4knvvro06gh4ot6l9cfeigr0167jb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOxHJIwveBM54R8wIG1uzIoy-9SVeP2Dw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419665886807-v8u4knvvro06gh4ot6l9cfeigr0167jb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

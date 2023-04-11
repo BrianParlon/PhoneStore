@@ -38,7 +38,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         homeScreen.setOnClickListener(this);
 
 
-
         fname = (EditText) findViewById(R.id.editTextTextPersonName3);
         lname = (EditText) findViewById(R.id.editTextTextPersonName4);
         em = (EditText) findViewById(R.id.editTextTextPersonName5);
@@ -64,7 +63,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void registerUser() {
-
         String firstName = fname.getText().toString().trim();
         String lastName = lname.getText().toString().trim();
         String password = pwrd.getText().toString().trim();

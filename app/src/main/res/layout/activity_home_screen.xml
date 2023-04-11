@@ -7,8 +7,8 @@
     tools:context=".HomeScreen">
 
 
-
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="75dp"
         android:layout_height="83dp"
         android:background="@drawable/phone"
@@ -55,12 +55,12 @@
         android:text="Find a new product"
         android:textSize="19dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/savedDimension"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.799" />
+        app:layout_constraintVertical_bias="0.371" />
 
     <Button
         android:id="@+id/savedDimension"
@@ -74,7 +74,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.626" />
+        app:layout_constraintVertical_bias="0.729" />
 
     <TextView
         android:id="@+id/textViewLogIn"
@@ -86,10 +86,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.011"
+        app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.165" />
 
     <TextView
         android:id="@+id/textView2"

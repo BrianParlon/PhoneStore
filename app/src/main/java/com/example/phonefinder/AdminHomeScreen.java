@@ -29,45 +29,23 @@ public class AdminHomeScreen extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference reference;
     private String userId;
     private Boolean isOpen=false;
-    Button btnPicture,newProd,saved,display;
+    Button btnPicture,newProd,newItem;
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.activity_admin_home_screen);
 
-        saved = (Button) findViewById(R.id.savedDimension);
-        saved.setOnClickListener(this);
+        newItem = (Button) findViewById(R.id.addItem);
+        newItem.setOnClickListener(this);
 
         newProd = (Button) findViewById(R.id.button5);
         newProd.setOnClickListener(this);
 
 
-        display = (Button) findViewById(R.id.displayRoom);
-        display.setOnClickListener(this);
-
-
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference  = FirebaseDatabase.getInstance().getReference("admin");
         userId = user.getUid();
-
-        TextView accName =(TextView) findViewById(R.id.textView2);
-        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Admin adminProfile = snapshot.getValue(Admin.class);
-
-                if(adminProfile != null){
-                    String accountName = adminProfile.getFirstName();
-                    accName.setText(accountName);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AdminHomeScreen.this,"Error",Toast.LENGTH_LONG).show();
-            }
-        });
 
         Button lgOut = (Button) findViewById(R.id.logout);
         lgOut.setOnClickListener(this);
@@ -81,6 +59,10 @@ public class AdminHomeScreen extends AppCompatActivity implements View.OnClickLi
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, MainActivity.class));
+                break;
+
+            case R.id.addItem:
+                startActivity(new Intent(this, addItem.class));
                 break;
 
 

@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             User userAcc = snapshot.getValue(User.class);
                             if (userAcc != null) {
-                                    startActivity(new Intent(MainActivity.this, SignUp.class));
+                                    startActivity(new Intent(MainActivity.this, HomeScreen.class));
 
                             } else{
                                 Toast.makeText(MainActivity.this,"You do not have an User account", Toast.LENGTH_LONG).show();
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 boolean admin = adminAcc.getAdmin();
                                 if (admin = true) {
-                                    startActivity(new Intent(MainActivity.this, SignUp.class));
+                                    startActivity(new Intent(MainActivity.this, AdminHomeScreen.class));
 
                                 }
 

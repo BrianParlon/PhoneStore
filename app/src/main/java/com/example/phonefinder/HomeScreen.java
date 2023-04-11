@@ -42,11 +42,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         newProd = (Button) findViewById(R.id.button5);
         newProd.setOnClickListener(this);
 
-
-        display = (Button) findViewById(R.id.displayRoom);
-        display.setOnClickListener(this);
-
-
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference  = FirebaseDatabase.getInstance().getReference("users");
         userId = user.getUid();

@@ -116,20 +116,17 @@ public class addItem extends AppCompatActivity {
                                 }
                             },500);
                            Toast.makeText(addItem.this, "Item Added Successfully", Toast.LENGTH_SHORT).show();
-                           Upload upload =new Upload(prodName.getText().toString().trim(),
-                                   taskSnapshot.getUploadSessionUri().toString());
+
+                           Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                           while (!urlTask.isSuccessful());
+                           Uri downloadUrl = urlTask.getResult();
+
+                           //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
+                           Upload upload = new Upload(prodName.getText().toString().trim(),downloadUrl.toString(),prodCategory.getText().toString().trim(),prodManufacturer.getText().toString().trim(),stock.getText().toString().trim());
+
                            String uploadId = databaseReference.push().getKey();
                            databaseReference.child(uploadId).setValue(upload);
-//                           Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-//                           while (!urlTask.isSuccessful());
-//                           Uri downloadUrl = urlTask.getResult();
-//
-//                           //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
-//                           Upload upload = new Upload(prodName.getText().toString().trim(),downloadUrl.toString());
-//
-//                           String uploadId = databaseReference.push().getKey();
-//                           databaseReference.child(uploadId).setValue(upload);
-//
+
                        }
                    })
                    .addOnFailureListener(new OnFailureListener() {

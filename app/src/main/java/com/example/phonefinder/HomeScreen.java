@@ -29,7 +29,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference reference;
     private String userId;
     private Boolean isOpen=false;
-    Button btnPicture,newProd,saved,display;
+    Button newProd,saved,display;
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.logout:
+            case R.id.button5:
+                startActivity(new Intent(this, UserProductView.class));
+                break;
+                case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, MainActivity.class));
                 break;

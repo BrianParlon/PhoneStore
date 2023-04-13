@@ -86,7 +86,7 @@ public class ItemsActivity extends AppCompatActivity implements ImageAdapter.OnI
     @Override
     public void OnItemClick(int position) {
 
-        Toast.makeText(this, "Normal click " +uploads.get(position).getStock(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Items in stock " +uploads.get(position).getStock(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

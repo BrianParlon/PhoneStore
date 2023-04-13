@@ -29,7 +29,7 @@ public class AdminHomeScreen extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference reference;
     private String userId;
     private Boolean isOpen=false;
-    Button view,newItem;
+    Button view,newItem,create;
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,9 @@ public class AdminHomeScreen extends AppCompatActivity implements View.OnClickLi
 
         view = (Button) findViewById(R.id.viewItems);
         view.setOnClickListener(this);
+
+        create = (Button) findViewById(R.id.createAdmin);
+        create.setOnClickListener(this);
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();

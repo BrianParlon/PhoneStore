@@ -64,8 +64,12 @@ public class AdminHomeScreen extends AppCompatActivity implements View.OnClickLi
             case R.id.addItem:
                 startActivity(new Intent(this, addItem.class));
                 break;
+
             case R.id.viewItems:
                 startActivity(new Intent(this, ItemsActivity.class));
+                break;
+                case R.id.createAdmin:
+                startActivity(new Intent(this, AdminSignUp.class));
                 break;
 
         }

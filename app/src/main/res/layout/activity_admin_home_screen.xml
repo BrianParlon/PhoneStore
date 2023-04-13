@@ -59,10 +59,10 @@
         app:layout_constraintVertical_bias="0.976" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/viewItems"
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:text="Find a new product"
+        android:text="List all products"
         android:textSize="19dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

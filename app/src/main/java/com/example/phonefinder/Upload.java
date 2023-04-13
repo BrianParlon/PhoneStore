@@ -1,5 +1,7 @@
 package com.example.phonefinder;
 
+import com.google.firebase.database.Exclude;
+
 public class Upload {
 
     private String name;
@@ -7,6 +9,7 @@ public class Upload {
     private String category;
     private String manufacturer;
     private String stock;
+    private String itemKey;
 
     public Upload(){}
 
@@ -55,6 +58,15 @@ public class Upload {
     }
     public void setStock(String stock) {
         this.stock=stock;
+    }
+
+    @Exclude
+    public String getKey(){
+        return itemKey;
+    }
+    @Exclude
+    public void setKey(String Key) {
+        this.itemKey=Key;
     }
 
 

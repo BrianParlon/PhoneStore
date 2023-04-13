@@ -68,9 +68,6 @@ public class AdminHomeScreen extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(this, ItemsActivity.class));
                 break;
 
-
-
-
         }
     }
 

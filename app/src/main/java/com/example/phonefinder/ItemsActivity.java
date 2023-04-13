@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -79,12 +85,47 @@ public class ItemsActivity extends AppCompatActivity implements ImageAdapter.OnI
 
     @Override
     public void OnItemClick(int position) {
-        Toast.makeText(this, "Normal click"+position, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Normal click " +uploads.get(position).getStock(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEditCLick(int position) {
-        Toast.makeText(this, "edit click"+position, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "edit click"+position, Toast.LENGTH_SHORT).show();
+        Upload selectedItem = uploads.get(position);
+        String selectedKey = selectedItem.getKey();
+        StorageReference itemRef = firebaseStorage.getReferenceFromUrl(selectedItem.getImageUrl());
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.item_dialog, null);
+
+
+        EditText pName = dialogView.findViewById(R.id.Name);
+        EditText pCategory = dialogView.findViewById(R.id.category);
+        EditText pStock = dialogView.findViewById(R.id.stock);
+        EditText pManufacturer = dialogView.findViewById(R.id.manufacturer);
+
+        AlertDialog.Builder itmDialog = new AlertDialog.Builder(this);
+        itmDialog.setTitle("Update Item");
+        itmDialog.setView(dialogView);
+        itmDialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String phoneName = pName.getText().toString();
+                String phoneManufacturer = pManufacturer.getText().toString();
+                String phoneStock = pStock.getText().toString();
+                String phoneCategory =pCategory.getText().toString();
+
+                databaseReference.child(selectedKey).child("name").setValue(phoneName);
+                databaseReference.child(selectedKey).child("category").setValue(phoneCategory);
+                databaseReference.child(selectedKey).child("manufacturer").setValue(phoneManufacturer);
+                databaseReference.child(selectedKey).child("stock").setValue(phoneStock);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        itmDialog.setNegativeButton("Cancel",null);
+
+        itmDialog.show();
 
     }
 

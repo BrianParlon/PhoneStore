@@ -1,6 +1,7 @@
 package com.example.phonefinder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.telephony.SmsManager;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -39,13 +40,26 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
             Upload uploadCurrent = itemUploads.get(position);
-            holder.textViewName.setText(uploadCurrent.getName());
+        int amount= Integer.parseInt(uploadCurrent.getStock());
+        if(amount==0){
+            holder.textViewName.setText(uploadCurrent.getName() +" OUT OF STOCK");
+            holder.textViewName.setTextColor(Color.RED);
             Picasso.with(itemContext)
                     .load(uploadCurrent.getImageUrl())
                     .placeholder(R.drawable.phone)
                     .fit()
                     .centerCrop()
                     .into(holder.imageView);
+
+        }else {
+            holder.textViewName.setText(uploadCurrent.getName() + " €" + uploadCurrent.getStock());
+            Picasso.with(itemContext)
+                    .load(uploadCurrent.getImageUrl())
+                    .placeholder(R.drawable.phone)
+                    .fit()
+                    .centerCrop()
+                    .into(holder.imageView);
+        }
     }
 
     @Override

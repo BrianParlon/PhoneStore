@@ -45,7 +45,6 @@ public class AdminHomeScreen extends AppCompatActivity implements View.OnClickLi
         create = (Button) findViewById(R.id.createAdmin);
         create.setOnClickListener(this);
 
-
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference  = FirebaseDatabase.getInstance().getReference("admin");
         userId = user.getUid();

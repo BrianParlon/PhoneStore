@@ -15,6 +15,13 @@
         android:theme="@style/Theme.PhoneFinder"
         tools:targetApi="31">
         <activity
+            android:name=".ConfirmationScreen"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".PurchaseScreen"
             android:exported="false">
             <meta-data

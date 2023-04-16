@@ -202,6 +202,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(this, "Your cart is empty!", Toast.LENGTH_SHORT).show();
             return;
         }
+        startActivity(new Intent(PurchaseScreen.this,ConfirmationScreen.class));
 
 
     }

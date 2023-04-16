@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -98,11 +99,17 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
 
     @Override
     public void onPurchaseCLick(int position) {
+        int stock = Integer.parseInt(uploads.get(position).getStock());
+        if(stock==0){
+            Toast.makeText(this, "This item is currently out of stock", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Upload selectedItem = uploads.get(position);
         Upload upload = new Upload(uploads.get(position).getName().trim(),uploads.get(position).getImageUrl().trim(),uploads.get(position).getCategory().trim(),uploads.get(position).getManufacturer().trim(),uploads.get(position).getStock().trim(),uploads.get(position).getPrice().trim());
 
         String uploadId = databaseReference2.push().getKey();
         databaseReference2.child(uploadId).setValue(upload);
+
 //        final HashMap<String,String> itemMap = new HashMap<>();
 //        itemMap.put("name", uploads.get(position).getName().toString());
 //        itemMap.put("price",uploads.get(position).getPrice());

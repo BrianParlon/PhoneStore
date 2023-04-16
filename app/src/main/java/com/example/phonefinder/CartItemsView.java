@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class CartItemsView extends AppCompatActivity implements CartAdapter.OnItemCLickListener {
+public class CartItemsView extends AppCompatActivity implements CartAdapter.OnItemCLickListener, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private UserItemAdapter adapter;
@@ -34,9 +35,10 @@ public class CartItemsView extends AppCompatActivity implements CartAdapter.OnIt
     private String userId;
     private ProgressBar progressBar;
     private FirebaseStorage firebaseStorage;
-    private DatabaseReference databaseReference,databaseReference2;
+    private DatabaseReference databaseReference, databaseReference2;
     private ValueEventListener dbListener;
     private List<Upload> uploads;
+    private Button purchase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +50,23 @@ public class CartItemsView extends AppCompatActivity implements CartAdapter.OnIt
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressBar=findViewById(R.id.progress_circle);
+        purchase = findViewById(R.id.purchaseButton);
+        purchase.setOnClickListener(this);
+        progressBar = findViewById(R.id.progress_circle);
         uploads = new ArrayList<>();
         adapter = new UserItemAdapter(CartItemsView.this, uploads);
         recyclerView.setAdapter(adapter);
 
-        firebaseStorage=FirebaseStorage.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
         databaseReference2 = FirebaseDatabase.getInstance().getReference("checkout").child(userId);
 
         dbListener = databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange( DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
 
                 uploads.clear();
 
-                for(DataSnapshot postSnapshot : snapshot.getChildren()){
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Upload upload = postSnapshot.getValue(Upload.class);
                     upload.setKey(postSnapshot.getKey());
                     uploads.add(upload);
@@ -74,7 +78,7 @@ public class CartItemsView extends AppCompatActivity implements CartAdapter.OnIt
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(CartItemsView.this,"Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CartItemsView.this, "Error", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
@@ -83,7 +87,7 @@ public class CartItemsView extends AppCompatActivity implements CartAdapter.OnIt
 
     @Override
     public void OnItemClick(int position) {
-        Toast.makeText(this, "Amount in stock: " +uploads.get(position).getStock(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Amount in stock: " + uploads.get(position).getStock(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -92,10 +96,19 @@ public class CartItemsView extends AppCompatActivity implements CartAdapter.OnIt
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         databaseReference2.removeEventListener(dbListener);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.purchaseButton:
+                startActivity(new Intent(this, PurchaseScreen.class));
+                break;
+
+        }
     }
 }

@@ -10,18 +10,21 @@ public class Upload {
     private String manufacturer;
     private String stock;
     private String itemKey;
+    private String price;
 
     public Upload(){}
 
-    public Upload(String name, String imageUrl,String category,String manufacturer, String stock){
+    public Upload(String name, String imageUrl,String category,String manufacturer, String stock,String price){
        if(name.trim().equals("")){
            name="Empty";
        }
+
         this.name=name;
         this.imageUrl=imageUrl;
         this.manufacturer=manufacturer;
         this.category=category;
         this.stock=stock;
+        this.price =price;
     }
 
 
@@ -60,6 +63,12 @@ public class Upload {
         this.stock=stock;
     }
 
+    public String getPrice(){
+        return price;
+    }
+    public void setPrice(String price){
+        this.price=price;
+    }
     @Exclude
     public String getKey(){
         return itemKey;

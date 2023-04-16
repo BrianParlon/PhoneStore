@@ -104,6 +104,7 @@ public class ItemsActivity extends AppCompatActivity implements ImageAdapter.OnI
         EditText pCategory = dialogView.findViewById(R.id.category);
         EditText pStock = dialogView.findViewById(R.id.stock);
         EditText pManufacturer = dialogView.findViewById(R.id.manufacturer);
+        EditText pPrice = dialogView.findViewById(R.id.price);
 
         AlertDialog.Builder itmDialog = new AlertDialog.Builder(this);
         itmDialog.setTitle("Update Item");
@@ -115,11 +116,14 @@ public class ItemsActivity extends AppCompatActivity implements ImageAdapter.OnI
                 String phoneManufacturer = pManufacturer.getText().toString();
                 String phoneStock = pStock.getText().toString();
                 String phoneCategory =pCategory.getText().toString();
+                String phonePrice = pPrice.getText().toString();
+
 
                 databaseReference.child(selectedKey).child("name").setValue(phoneName);
                 databaseReference.child(selectedKey).child("category").setValue(phoneCategory);
                 databaseReference.child(selectedKey).child("manufacturer").setValue(phoneManufacturer);
                 databaseReference.child(selectedKey).child("stock").setValue(phoneStock);
+                databaseReference.child(selectedKey).child("price").setValue(phonePrice);
                 adapter.notifyDataSetChanged();
             }
         });

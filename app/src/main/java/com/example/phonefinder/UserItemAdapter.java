@@ -48,16 +48,16 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.ImageV
                     .load(uploadCurrent.getImageUrl())
                     .placeholder(R.drawable.phone)
                     .fit()
-                    .centerCrop()
+                    .centerInside()
                     .into(holder.imageView);
 
         }else {
-            holder.textViewName.setText(uploadCurrent.getName() + " €" + uploadCurrent.getStock());
+            holder.textViewName.setText(uploadCurrent.getName() + " €" + uploadCurrent.getPrice());
             Picasso.with(itemContext)
                     .load(uploadCurrent.getImageUrl())
                     .placeholder(R.drawable.phone)
                     .fit()
-                    .centerCrop()
+                    .centerInside()
                     .into(holder.imageView);
         }
     }

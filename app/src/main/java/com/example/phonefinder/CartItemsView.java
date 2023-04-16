@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,11 +25,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserProductView extends AppCompatActivity implements UserItemAdapter.OnItemCLickListener {
+public class CartItemsView extends AppCompatActivity implements CartAdapter.OnItemCLickListener {
 
     private RecyclerView recyclerView;
     private UserItemAdapter adapter;
-    private FloatingActionButton cart;
+
     private FirebaseUser user;
     private String userId;
     private ProgressBar progressBar;
@@ -42,23 +41,22 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_product_view);
+        setContentView(R.layout.activity_cart_items_view);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userId = user.getUid();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        cart = findViewById(R.id.cartButton);
+
         progressBar=findViewById(R.id.progress_circle);
         uploads = new ArrayList<>();
-        adapter = new UserItemAdapter(UserProductView.this, uploads);
+        adapter = new UserItemAdapter(CartItemsView.this, uploads);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(UserProductView.this);
+
         firebaseStorage=FirebaseStorage.getInstance();
-        databaseReference= FirebaseDatabase.getInstance().getReference("items");
         databaseReference2 = FirebaseDatabase.getInstance().getReference("checkout").child(userId);
 
-        dbListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        dbListener = databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot snapshot) {
 
@@ -76,16 +74,8 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(UserProductView.this,"Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CartItemsView.this,"Error", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserProductView.this, CartItemsView.class);
-                startActivity(intent);
             }
         });
 
@@ -93,24 +83,11 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
 
     @Override
     public void OnItemClick(int position) {
-            Toast.makeText(this, "Amount in stock: " +uploads.get(position).getStock(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Amount in stock: " +uploads.get(position).getStock(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPurchaseCLick(int position) {
-        Upload selectedItem = uploads.get(position);
-        Upload upload = new Upload(uploads.get(position).getName().trim(),uploads.get(position).getImageUrl().trim(),uploads.get(position).getCategory().trim(),uploads.get(position).getManufacturer().trim(),uploads.get(position).getStock().trim(),uploads.get(position).getPrice().trim());
-
-        String uploadId = databaseReference2.push().getKey();
-        databaseReference2.child(uploadId).setValue(upload);
-//        final HashMap<String,String> itemMap = new HashMap<>();
-//        itemMap.put("name", uploads.get(position).getName().toString());
-//        itemMap.put("price",uploads.get(position).getPrice());
-//        itemMap.put("imageUrl",uploads.get(position).getImageUrl());
-//      //  itemMap.put("itemkey",uploads.get(position).getKey());
-//        String uploadId = databaseReference2.push().getKey();
-//        databaseReference2.child(uploadId).setValue(itemMap);
-        Toast.makeText(this, "Phone has been added to cart "+selectedItem.getName(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -119,6 +96,6 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseReference.removeEventListener(dbListener);
+        databaseReference2.removeEventListener(dbListener);
     }
 }

@@ -34,13 +34,12 @@ public class addItem extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private Button chooseImage,upload,showItems;
-    private EditText prodName,prodCategory,prodManufacturer,stock;
+    private EditText prodName,prodCategory,prodManufacturer,stock,price;
     private ImageView imageView;
     private ProgressBar pBar;
     private Uri imageUri;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
-
     private StorageTask uploadTask;
 
     @Override
@@ -57,6 +56,7 @@ public class addItem extends AppCompatActivity {
         imageView = findViewById(R.id.imageView2);
         pBar = findViewById(R.id.progressBar);
         showItems = findViewById(R.id.viewItems);
+        price=findViewById(R.id.productPrice);
 
         storageReference = FirebaseStorage.getInstance().getReference("items");
         databaseReference = FirebaseDatabase.getInstance().getReference("items");
@@ -73,8 +73,6 @@ public class addItem extends AppCompatActivity {
                 if (uploadTask != null && uploadTask.isInProgress()){
                     Toast.makeText(addItem.this, "Upload in progress",Toast.LENGTH_SHORT).show();
                 }else {
-
-
                     uploadItems();
                 }
             }
@@ -122,7 +120,7 @@ public class addItem extends AppCompatActivity {
                            Uri downloadUrl = urlTask.getResult();
 
                            //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
-                           Upload upload = new Upload(prodName.getText().toString().trim(),downloadUrl.toString(),prodCategory.getText().toString().trim(),prodManufacturer.getText().toString().trim(),stock.getText().toString().trim());
+                           Upload upload = new Upload(prodName.getText().toString().trim(),downloadUrl.toString(),prodCategory.getText().toString().trim(),prodManufacturer.getText().toString().trim(),stock.getText().toString().trim(),price.getText().toString().trim());
 
                            String uploadId = databaseReference.push().getKey();
                            databaseReference.child(uploadId).setValue(upload);

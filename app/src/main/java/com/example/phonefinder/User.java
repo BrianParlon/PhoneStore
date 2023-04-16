@@ -9,6 +9,7 @@ public class User {
     private int purchaseCounter;
 
 
+
     public User(){
 
     }

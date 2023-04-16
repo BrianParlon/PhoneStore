@@ -15,6 +15,20 @@
         android:theme="@style/Theme.PhoneFinder"
         tools:targetApi="31">
         <activity
+            android:name=".CartItemsView"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CartAdapter"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UserItemAdapter"
             android:exported="false">
             <meta-data

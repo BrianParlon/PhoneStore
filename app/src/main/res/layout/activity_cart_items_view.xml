@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".UserProductView">
+    tools:context=".CartItemsView">
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -16,15 +16,19 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:layout_width="387dp"
+        android:layout_height="574dp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="630dp" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="105dp"
-        android:layout_height="76dp"
-        android:src="@drawable/ic_baseline_shopping_cart_24"
-        android:id="@+id/cartButton">
-
-
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        <Button
+            android:id="@+id/purchaseButton"
+            android:text="@string/purchase"
+            android:layout_width="122dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="275dp" />
+    </LinearLayout>
 </RelativeLayout>

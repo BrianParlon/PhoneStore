@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -39,13 +40,15 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
     private FirebaseUser user;
     private String userId;
     private FirebaseStorage firebaseStorage;
+    private EditText discountCode;
     private DatabaseReference databaseReference, databaseReference2,databaseReference3;
     private ValueEventListener dbListener;
     private List<Upload> uploads;
     private LinearLayout phonesContainer;
     private TextView totalPrice;
     private int total;
-    private Button order;
+    private Button order,discButton;
+    private int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,9 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         databaseReference = FirebaseDatabase.getInstance().getReference("items");
         databaseReference2 = FirebaseDatabase.getInstance().getReference("checkout").child(userId);
         totalPrice = findViewById(R.id.totalPrice);
+
+        discButton = (Button)findViewById(R.id.discount);
+        discButton.setOnClickListener(this);
         phonesContainer = findViewById(R.id.phonesContainer);
         order = (Button)findViewById(R.id.placeOrder);
         order.setOnClickListener(this);
@@ -214,6 +220,25 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
             case R.id.placeOrder:
                 validateCard();
                 break;
+            case R.id.discount:
+                discount();
+                break;
+        }
+    }
+
+    private void discount() {
+        discountCode = (EditText)findViewById(R.id.discountCde);
+        String checkCode = discountCode.getText().toString().trim();
+
+        if(checkCode.equalsIgnoreCase("lucky")&& count!=1){
+            int disc=10;
+            total =total - disc;
+            totalPrice.setText("Total Price: €" + total);
+            count++;
+            Toast.makeText(this, "€10 Discount applied", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "This is not a current code or code applied", Toast.LENGTH_SHORT).show();
         }
     }
 

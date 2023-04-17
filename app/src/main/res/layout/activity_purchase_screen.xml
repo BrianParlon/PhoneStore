@@ -43,7 +43,19 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/discountCde"
+            android:hint="Discount code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </EditText>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/discount"
+                android:text="Enter discount">
+            </Button>
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

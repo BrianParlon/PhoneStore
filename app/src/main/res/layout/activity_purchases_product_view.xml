@@ -6,8 +6,15 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".UserProductView">
+    tools:context=".purchasesProductView">
 
+    <TextView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Previous purchases"
+        android:inputType="text"
+        android:maxLines="1" />
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -19,8 +26,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="630dp"
-
+        android:layout_below="@+id/search_bar"
         android:layout_marginTop="8dp"/>
 
-
-</RelativeLayout>
+  </RelativeLayout>

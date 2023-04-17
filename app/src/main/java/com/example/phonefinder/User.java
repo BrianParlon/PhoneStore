@@ -7,11 +7,17 @@ public class User {
     private String email;
     private String address;
     private int purchaseCounter;
-
+    private static User instance;
 
 
     public User(){
 
+    }
+    public static User getInstance() {
+        if (instance == null) {
+            instance = new User();
+        }
+        return instance;
     }
 
     public User(String firstName, String lastName, String password, String email,String address, int purchaseCounter) {

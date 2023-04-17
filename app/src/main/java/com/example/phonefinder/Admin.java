@@ -6,10 +6,17 @@ public class Admin {
     private String password;
     private String email;
     private boolean admin=false;
+    private static Admin instance;
 
 
     public Admin(){
 
+    }
+    public static Admin getInstance() {
+        if (instance == null) {
+            instance = new Admin();
+        }
+        return instance;
     }
 
 

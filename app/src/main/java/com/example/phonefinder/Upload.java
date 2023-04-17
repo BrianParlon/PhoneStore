@@ -4,6 +4,7 @@ import com.google.firebase.database.Exclude;
 
 public class Upload {
 
+    private static Upload instance;
     private String name;
     private String imageUrl;
     private String category;
@@ -15,6 +16,13 @@ public class Upload {
     private String quantity;
 
     public Upload(){}
+
+    public static Upload getInstance() {
+        if (instance == null) {
+            instance = new Upload();
+        }
+        return instance;
+    }
 
     public Upload(String name, String imageUrl,String category,String manufacturer, String stock,String price){
        if(name.trim().equals("")){

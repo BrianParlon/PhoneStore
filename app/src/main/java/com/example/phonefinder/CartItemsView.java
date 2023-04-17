@@ -44,8 +44,7 @@ public class CartItemsView extends AppCompatActivity implements CartAdapter.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_items_view);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+        userId = String.valueOf(CurrentUser.getInstance().getCurrentUser());
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

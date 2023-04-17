@@ -31,6 +31,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private Boolean isOpen=false;
     Button newProd,saved,display;
     ImageView imageView;
+    //CurrentUser.getInstance().getCurrentUser()
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

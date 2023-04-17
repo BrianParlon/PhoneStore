@@ -36,7 +36,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        saved = (Button) findViewById(R.id.savedDimension);
+        saved = (Button) findViewById(R.id.savedPurchases);
         saved.setOnClickListener(this);
 
         newProd = (Button) findViewById(R.id.button5);
@@ -79,6 +79,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.savedPurchases:
+
+                startActivity(new Intent(this, purchasesProductView.class));
                 break;
 
 

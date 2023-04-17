@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,7 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
     private FloatingActionButton cart;
     private FirebaseUser user;
     private String userId;
+    private EditText searchView;
     private ProgressBar progressBar;
     private FirebaseStorage firebaseStorage;
     private DatabaseReference databaseReference,databaseReference2;
@@ -53,6 +57,7 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
         progressBar=findViewById(R.id.progress_circle);
         uploads = new ArrayList<>();
         adapter = new UserItemAdapter(UserProductView.this, uploads);
+        searchView = findViewById(R.id.search_bar);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(UserProductView.this);
         firebaseStorage=FirebaseStorage.getInstance();
@@ -82,6 +87,22 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
             }
         });
 
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +111,16 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
             }
         });
 
+    }
+
+    private void filter(String toString) {
+        List<Upload> filterList = new ArrayList<>();
+        for(Upload item: uploads){
+            if(item.getName().toLowerCase().contains(toString.toLowerCase())){
+                filterList.add(item);
+            }
+        }
+        adapter.filter(filterList);
     }
 
     @Override
@@ -112,7 +143,6 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
         upload.setOriginalItemKey(uploads.get(position).getKey());
         String uploadId = databaseReference2.push().getKey();
         databaseReference2.child(uploadId).setValue(upload);
-
 
         Toast.makeText(this, "Phone has been added to cart "+selectedItem.getName(), Toast.LENGTH_SHORT).show();
 

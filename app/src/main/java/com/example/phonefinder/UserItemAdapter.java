@@ -67,6 +67,11 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.ImageV
         return itemUploads.size();
     }
 
+    public void filter(List<Upload> filterList) {
+        itemUploads = filterList;
+        notifyDataSetChanged();
+    }
+
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 

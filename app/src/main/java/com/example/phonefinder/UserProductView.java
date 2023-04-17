@@ -105,18 +105,14 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
             return;
         }
         Upload selectedItem = uploads.get(position);
-        Upload upload = new Upload(uploads.get(position).getName().trim(),uploads.get(position).getImageUrl().trim(),uploads.get(position).getCategory().trim(),uploads.get(position).getManufacturer().trim(),uploads.get(position).getStock().trim(),uploads.get(position).getPrice().trim());
+        int quantity=1;
+        uploads.get(position).setQuantity(String.valueOf(quantity));
+        Upload upload = new Upload(uploads.get(position).getName().trim(),uploads.get(position).getImageUrl().trim(),uploads.get(position).getCategory().trim(),uploads.get(position).getManufacturer().trim(),uploads.get(position).getStock().trim(),uploads.get(position).getPrice().trim(),uploads.get(position).getQuantity());
 
         String uploadId = databaseReference2.push().getKey();
         databaseReference2.child(uploadId).setValue(upload);
 
-//        final HashMap<String,String> itemMap = new HashMap<>();
-//        itemMap.put("name", uploads.get(position).getName().toString());
-//        itemMap.put("price",uploads.get(position).getPrice());
-//        itemMap.put("imageUrl",uploads.get(position).getImageUrl());
-//      //  itemMap.put("itemkey",uploads.get(position).getKey());
-//        String uploadId = databaseReference2.push().getKey();
-//        databaseReference2.child(uploadId).setValue(itemMap);
+
         Toast.makeText(this, "Phone has been added to cart "+selectedItem.getName(), Toast.LENGTH_SHORT).show();
 
     }

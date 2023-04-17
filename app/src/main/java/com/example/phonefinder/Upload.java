@@ -11,6 +11,8 @@ public class Upload {
     private String stock;
     private String itemKey;
     private String price;
+    private String originalItemKey;
+    private String quantity;
 
     public Upload(){}
 
@@ -27,14 +29,29 @@ public class Upload {
         this.price =price;
     }
 
+    public Upload(String name, String imageUrl, String category, String manufacturer, String stock, String price , String quantity) {
+        this.name=name;
+        this.imageUrl=imageUrl;
+        this.manufacturer=manufacturer;
+        this.category=category;
+        this.stock=stock;
+        this.price =price;
+        this.quantity=quantity;
+    }
+
 
     public String getName(){
         return name;
 
     }
     public void setName(String name){
-
         this.name=name;
+    }  public String getQuantity(){
+        return quantity;
+
+    }
+    public void setQuantity(String quantity){
+        this.quantity=quantity;
     }
 
     public String getImageUrl(){
@@ -77,6 +94,14 @@ public class Upload {
     public void setKey(String Key) {
         this.itemKey=Key;
     }
+    public String getOriginalItemKey() {
+        return originalItemKey;
+    }
+
+    public void setOriginalItemKey(String originalItemKey) {
+        this.originalItemKey = originalItemKey;
+    }
+
 
 
 }

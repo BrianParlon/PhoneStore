@@ -39,7 +39,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
     private FirebaseUser user;
     private String userId;
     private FirebaseStorage firebaseStorage;
-    private DatabaseReference databaseReference2;
+    private DatabaseReference databaseReference, databaseReference2;
     private ValueEventListener dbListener;
     private List<Upload> uploads;
     private LinearLayout phonesContainer;
@@ -55,6 +55,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         userId = user.getUid();
         uploads = new ArrayList<>();
         firebaseStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("items");
         databaseReference2 = FirebaseDatabase.getInstance().getReference("checkout").child(userId);
         totalPrice = findViewById(R.id.totalPrice);
         phonesContainer = findViewById(R.id.phonesContainer);
@@ -92,14 +93,54 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         TextView phonePrice = new TextView(this);
         TextView phoneName = new TextView(this);
         Button remove = new Button(this);
+        Button increase = new Button(this);
+        Button decrease = new Button(this);
 
 
+        increase.setText("+");
+        decrease.setText("-");
+
+        increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentQuantity = Integer.parseInt(upload.getQuantity());
+                int stock = Integer.parseInt(upload.getStock());
+                if (currentQuantity < stock) {
+                    currentQuantity++;
+                    upload.setStock(String.valueOf(currentQuantity));
+                    databaseReference2.child(upload.getKey()).child("quantity").setValue(String.valueOf(currentQuantity));
+                    phoneQuan.setText("Quantity: " + currentQuantity);
+                    updateTotalPrice();
+                } else {
+                    Toast.makeText(PurchaseScreen.this, "Not enough stock for " + upload.getName(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentQuantity = Integer.parseInt(upload.getQuantity());
+                if (currentQuantity > 1) {
+                    currentQuantity--;
+                    upload.setQuantity(String.valueOf(currentQuantity));
+                    databaseReference2.child(upload.getKey()).child("quantity").setValue(String.valueOf(currentQuantity));
+                    phoneQuan.setText("Quantity: " + currentQuantity);
+                    updateTotalPrice();
+                } else {
+                    Toast.makeText(PurchaseScreen.this, "Quantity should be at least 1", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         View v = new View(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 2);
         layoutParams.setMargins(0, 16, 0, 16);
         v.setLayoutParams(layoutParams);
         v.setBackgroundColor(Color.parseColor("#FFD3D3D3"));
+        LinearLayout quantityButtonsContainer = new LinearLayout(this);
+        quantityButtonsContainer.setOrientation(LinearLayout.HORIZONTAL);
+        quantityButtonsContainer.addView(decrease);
+        quantityButtonsContainer.addView(increase);
 
 
         phoneName.setText("Name: " + upload.getName());
@@ -110,7 +151,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         phoneMan.setTextColor(Color.BLACK);
         phoneMan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        phoneQuan.setText("Quantity: " + upload.getStock());
+        phoneQuan.setText("Quantity: " + upload.getQuantity());
         phoneQuan.setTextColor(Color.BLACK);
         phoneQuan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -125,7 +166,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         itemContainer.addView(phonePrice);
         itemContainer.addView(remove);
         itemContainer.addView(v);
-
+        itemContainer.addView(quantityButtonsContainer);
 
         phonesContainer.addView(itemContainer);
         remove.setText("delete");
@@ -146,7 +187,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
     private void updateTotalPrice() {
         total = 0;
         for (Upload upload : uploads) {
-            total += Integer.parseInt(upload.getPrice());
+            total += Integer.parseInt(upload.getPrice())* Integer.parseInt(upload.getQuantity());
         }
         totalPrice.setText("Total Price: €" + total);
     }
@@ -202,6 +243,8 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(this, "Your cart is empty!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
         startActivity(new Intent(PurchaseScreen.this,ConfirmationScreen.class));
 
 

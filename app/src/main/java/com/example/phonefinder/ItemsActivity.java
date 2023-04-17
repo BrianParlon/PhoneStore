@@ -91,7 +91,7 @@ public class ItemsActivity extends AppCompatActivity implements ImageAdapter.OnI
 
     @Override
     public void onEditCLick(int position) {
-      //  Toast.makeText(this, "edit click"+position, Toast.LENGTH_SHORT).show();
+
         Upload selectedItem = uploads.get(position);
         String selectedKey = selectedItem.getKey();
         StorageReference itemRef = firebaseStorage.getReferenceFromUrl(selectedItem.getImageUrl());

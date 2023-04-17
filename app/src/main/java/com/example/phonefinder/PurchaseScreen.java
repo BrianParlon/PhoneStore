@@ -149,7 +149,6 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         quantityButtonsContainer.addView(decrease);
         quantityButtonsContainer.addView(increase);
 
-
         phoneName.setText("Name: " + upload.getName());
         phoneName.setTextColor(Color.BLACK);
         phoneName.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -162,11 +161,9 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         phoneQuan.setTextColor(Color.BLACK);
         phoneQuan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-
         phonePrice.setText("Price: €" + upload.getPrice());
         phonePrice.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        // Add the TextViews to the phones container
         itemContainer.addView(phoneName);
         itemContainer.addView(phoneMan);
         itemContainer.addView(phoneQuan);

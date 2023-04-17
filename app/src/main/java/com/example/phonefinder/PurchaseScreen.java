@@ -39,7 +39,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
     private FirebaseUser user;
     private String userId;
     private FirebaseStorage firebaseStorage;
-    private DatabaseReference databaseReference, databaseReference2;
+    private DatabaseReference databaseReference, databaseReference2,databaseReference3;
     private ValueEventListener dbListener;
     private List<Upload> uploads;
     private LinearLayout phonesContainer;
@@ -55,6 +55,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         userId = user.getUid();
         uploads = new ArrayList<>();
         firebaseStorage = FirebaseStorage.getInstance();
+        databaseReference3 = FirebaseDatabase.getInstance().getReference("purchases").child(userId);
         databaseReference = FirebaseDatabase.getInstance().getReference("items");
         databaseReference2 = FirebaseDatabase.getInstance().getReference("checkout").child(userId);
         totalPrice = findViewById(R.id.totalPrice);
@@ -192,6 +193,21 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         totalPrice.setText("Total Price: €" + total);
     }
 
+    private void updateStock(){
+        for (Upload upload : uploads) {
+
+            String origKey = upload.getOriginalItemKey();
+            int currentStock = Integer.parseInt(upload.getStock());
+            int quantity = Integer.parseInt(upload.getQuantity());
+            if (currentStock >= quantity) {
+                databaseReference.child(origKey).child("stock").setValue(Integer.toString(currentStock - quantity));
+            } else {
+                Toast.makeText(this, "This amount is not in stock for " + upload.getName(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -244,9 +260,23 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
+        updateStock();
+        removeFromCheckout();
+        savePurchase();
 
         startActivity(new Intent(PurchaseScreen.this,ConfirmationScreen.class));
 
+
+    }
+
+    private void savePurchase() {
+        for (Upload upload : uploads) {
+            String uploadId = databaseReference3.push().getKey();
+            databaseReference3.child(uploadId).setValue(upload);
+        }
+    }
+    private void removeFromCheckout() {
+        databaseReference2.removeValue();
 
     }
 }

@@ -85,7 +85,7 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserProductView.this, CartItemsView.class);
+                Intent intent = new Intent(UserProductView.this, PurchaseScreen.class);
                 startActivity(intent);
             }
         });
@@ -104,11 +104,12 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
             Toast.makeText(this, "This item is currently out of stock", Toast.LENGTH_SHORT).show();
             return;
         }
+
         Upload selectedItem = uploads.get(position);
         int quantity=1;
         uploads.get(position).setQuantity(String.valueOf(quantity));
         Upload upload = new Upload(uploads.get(position).getName().trim(),uploads.get(position).getImageUrl().trim(),uploads.get(position).getCategory().trim(),uploads.get(position).getManufacturer().trim(),uploads.get(position).getStock().trim(),uploads.get(position).getPrice().trim(),uploads.get(position).getQuantity());
-
+        upload.setOriginalItemKey(uploads.get(position).getKey());
         String uploadId = databaseReference2.push().getKey();
         databaseReference2.child(uploadId).setValue(upload);
 
@@ -116,6 +117,8 @@ public class UserProductView extends AppCompatActivity implements UserItemAdapte
         Toast.makeText(this, "Phone has been added to cart "+selectedItem.getName(), Toast.LENGTH_SHORT).show();
 
     }
+
+
 
 
 

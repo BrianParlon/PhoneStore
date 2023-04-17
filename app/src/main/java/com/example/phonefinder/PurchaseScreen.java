@@ -57,7 +57,7 @@ public class PurchaseScreen extends AppCompatActivity implements View.OnClickLis
         user = FirebaseAuth.getInstance().getCurrentUser();
         userId = user.getUid();
         uploads = new ArrayList<>();
-        firebaseStorage = FirebaseStorage.getInstance();
+        firebaseStorage = FirebaseStorageSingleton.getInstance();
         databaseReference3 = FirebaseDatabase.getInstance().getReference("purchases").child(userId);
         databaseReference = FirebaseDatabase.getInstance().getReference("items");
         databaseReference2 = FirebaseDatabase.getInstance().getReference("checkout").child(userId);

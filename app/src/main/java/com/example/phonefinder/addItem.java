@@ -58,7 +58,7 @@ public class addItem extends AppCompatActivity {
         showItems = findViewById(R.id.viewItems);
         price=findViewById(R.id.productPrice);
 
-        storageReference = FirebaseStorage.getInstance().getReference("items");
+        storageReference = FirebaseStorageSingleton.getInstance().getReference("items");
         databaseReference = FirebaseDatabase.getInstance().getReference("items");
 
         chooseImage.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +119,6 @@ public class addItem extends AppCompatActivity {
                            while (!urlTask.isSuccessful());
                            Uri downloadUrl = urlTask.getResult();
 
-                           //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
                            Upload upload = new Upload(prodName.getText().toString().trim(),downloadUrl.toString(),prodCategory.getText().toString().trim(),prodManufacturer.getText().toString().trim(),stock.getText().toString().trim(),price.getText().toString().trim());
 
                            String uploadId = databaseReference.push().getKey();

@@ -56,7 +56,7 @@ public class CartItemsView extends AppCompatActivity implements CartAdapter.OnIt
         adapter = new UserItemAdapter(CartItemsView.this, uploads);
         recyclerView.setAdapter(adapter);
 
-        firebaseStorage = FirebaseStorage.getInstance();
+        firebaseStorage = FirebaseStorageSingleton.getInstance();
         databaseReference2 = FirebaseDatabase.getInstance().getReference("checkout").child(userId);
 
         dbListener = databaseReference2.addValueEventListener(new ValueEventListener() {
